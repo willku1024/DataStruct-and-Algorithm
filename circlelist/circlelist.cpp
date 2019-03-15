@@ -82,18 +82,13 @@ int CircleList_Insert(CircleList *list, CircleListNode *node, int pos)
         current = current->next;
     }
 
+    // 通用操作
     // 1.把pos指向节点的后继挂上去
     node->next = current->next;
     // 2.当前节点的下个节点为新节点
     current->next = node;
 
-
-    // 如果第一次插入，需要初始化游标
-    if(t->length == 0)
-    {
-        t->slider = node;
-    }
-
+    // 异常点:
     // 如果插入的是第一个节点，即头插法需要有变化
     // 判断头插法的方法是找pos的结果和头结点中的header一致
     if(current == (CircleListNode*) list)
@@ -102,6 +97,12 @@ int CircleList_Insert(CircleList *list, CircleListNode *node, int pos)
         CircleListNode* last = CircleList_Get(list, CircleList_Length(list));
         // 2.让最后一个节点的末尾指向第一个元素（也即：last->next = node;）
         last->next = current->next;
+    }
+
+    // 如果第一次插入，需要初始化游标
+    if(t->length == 0)
+    {
+        t->slider = node;
     }
 
     t->length++;
@@ -131,7 +132,8 @@ CircleListNode *CircleList_Next(CircleList *list)
     TCircleList *t = (TCircleList *)list;
     CircleListNode *node = t->slider;
 
-    t->slider = node->next;
+    if(t->slider!=NULL)
+        t->slider = node->next;
 
     return node;
 }
@@ -171,6 +173,7 @@ void CircleList_DeleteNode(CircleList *list, CircleListNode *node)
         if(current == node)
         {
 
+            // 异常点：
             // 如果为第一个节点
             if(node == ((CircleListNode*)list)->next)
             {
@@ -180,9 +183,6 @@ void CircleList_DeleteNode(CircleList *list, CircleListNode *node)
             }
 
             prev->next = node->next;
-
-
-
 
             // 如果要删除的元素是slider，要下移slider
             if(t->slider == node)
@@ -235,8 +235,6 @@ CircleListNode* CircleList_Delete(CircleList *list, int pos)
     }
 
     prev->next = node->next;
-
-
 
 
     // 如果要删除的元素是slider，要下移slider

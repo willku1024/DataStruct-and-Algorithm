@@ -71,10 +71,8 @@ int LinkList_Insert(LinkList *list, LinkListNode *node, int pos)
     LinkListNode *current = &t->header;
 
     // 等价测试
-    //LinkListNode *current2 = (LinkListNode*)list;
-    //cout << list << ";" <<sizeof (list)<< endl;
-    //cout << current <<";" <<sizeof (current)<< endl;
-    //cout << current2 <<";" <<sizeof (current2)<< endl;
+    //LinkListNode *current = (LinkListNode*)list;
+    //LinkListNode *current = (LinkListNode*)&t->header;
 
     //当前节点的前驱
     for (int i=0; i<pos && (current->next!=NULL); i++) {
