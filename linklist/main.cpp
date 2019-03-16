@@ -25,10 +25,10 @@ int main()
 
     LinkList* llist = LinkList_Create();
 
-    cout << LinkList_Length(llist) << endl;
+    cout << "len:" << LinkList_Length(llist) << endl;
 
-    LinkList_Insert(llist, (LinkListNode *) &t1, 0);
-    LinkList_Insert(llist, (LinkListNode *) &t2, 0);
+    LinkList_Insert(llist, (LinkListNode *) &t1, LinkList_Length(llist));
+    LinkList_Insert(llist, (LinkListNode *) &t2, LinkList_Length(llist));
     LinkList_Insert(llist, (LinkListNode *) &t3, 0);
     LinkList_Insert(llist, (LinkListNode *) &t4, 0);
 
