@@ -62,7 +62,7 @@ bool isMatch(char right, char left)
 }
 
 
-bool scanner2(string text)
+bool scanner_cpp(string text)
 {
     istringstream s(text);
 
@@ -72,20 +72,22 @@ bool scanner2(string text)
     LinkStack* stack = LinkStack_Create();
 #if 10
     while (is!=eof) {
-        char str = *is++;//++;
-        cout << &is << endl;
+        char str = *is;
+
         if (isLeft(str))
         {
-            LinkStack_Push(stack, (void*) &(is));
+            LinkStack_Push(stack, (void *) (str - '0'));
+            // cout << (char) ((long)LinkStack_Top(stack) + '0')<< endl;
         }
         if(isRight(str))
         {
-            char STR = *(char *)LinkStack_Pop(stack);
+            char STR = (char) ((long) LinkStack_Pop(stack) + '0');
             if(!isMatch(str, STR))
                 break;
         }
 
-        //++is;
+        ++is;
+
     }
 
     if( (is==eof) && (LinkStack_Size(stack)==0))
@@ -104,7 +106,7 @@ bool scanner2(string text)
 }
 
 
-bool scanner(const char *text)
+bool scanner_c(const char *text)
 {
     cout << strlen(text) << endl;
 
@@ -134,12 +136,13 @@ bool scanner(const char *text)
 }
 int main()
 {
-    //const char * code ="#include <iostream> int main() { char * code ='';return 0; }";
-    const char * code ="{23;}()(";
+    const char * code ="#include <iostream> int main() { char * code ='';return 0; }";
+    //const char * code ="{23;}()";
 
-    bool ret = scanner(code);
+    bool ret = scanner_cpp(code);
+    bool ret2 = scanner_c(code);
 
-    if(ret)
+    if(ret && ret2)
     {
         cout << "ok!" << endl;
     }
