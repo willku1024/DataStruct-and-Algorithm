@@ -68,7 +68,6 @@ void *LinkStack_Pop(LinkStack *stack)
 void *LinkStack_Top(LinkStack *stack)
 {
    TLinkStackNode* t = (TLinkStackNode*)LinkList_Get(stack, 0);
-
    if(t == NULL)
    {
        return NULL;

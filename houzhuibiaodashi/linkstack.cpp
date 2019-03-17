@@ -51,6 +51,7 @@ int LinkStack_Push(LinkStack *stack, void *item)
 void *LinkStack_Pop(LinkStack *stack)
 {
     TLinkStackNode* t = (TLinkStackNode*)LinkList_Delete(stack, 0);
+
     if(t == NULL)
     {
         return NULL;
