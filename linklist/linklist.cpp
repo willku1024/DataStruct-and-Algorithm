@@ -128,3 +128,26 @@ LinkListNode *LinkList_Delete(LinkList *list, int pos)
     return delnode;
 
 }
+
+LinkList *LinkList_Reverse(LinkList *list)
+{
+    if(list == NULL)
+    {
+        return NULL;
+    }
+
+    TLinkList *t = (TLinkList*) list;
+    LinkListNode *current = (&t->header)->next;
+    LinkListNode *prev = NULL;
+
+    while (current != NULL) {
+        LinkListNode *bck = current->next;
+        current->next = prev;
+        prev = current;
+        current = bck;
+    }
+
+    t->header.next = prev;
+
+    return list;
+}

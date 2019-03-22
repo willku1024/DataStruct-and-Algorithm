@@ -217,7 +217,7 @@ int main()
         // 后序遍历
         pntTree(&t1, 3);
         cout << endl;
-        list<BiTNode> t = postOrder_err(&t1);
+        list<BiTNode> t = postOrder(&t1);
         for (list<BiTNode>::iterator it = t.begin() ; it!=t.end() ; ++it) {
             cout << it->data << " ";
         }

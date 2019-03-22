@@ -42,7 +42,16 @@ int main()
 
     for (int i=0; i<LinkList_Length(llist) ; i++) {
         Teacher * t = (Teacher *)LinkList_Get(llist, i);
-        cout<< t->age << endl;
+        cout<< t->age << " ";
     }
+    cout<< endl;
+
+    LinkList_Reverse(llist);
+    for (int i=0; i<LinkList_Length(llist) ; i++) {
+        Teacher * t = (Teacher *)LinkList_Get(llist, i);
+        cout<< t->age << " ";
+    }
+    cout<< endl;
+
     return 0;
 }

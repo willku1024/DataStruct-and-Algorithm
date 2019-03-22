@@ -23,6 +23,9 @@ LinkListNode* LinkList_Get(LinkList* list, int pos);
 
 LinkListNode* LinkList_Delete(LinkList* list, int pos);
 
+// 单链表的反转
+LinkList* LinkList_Reverse(LinkList* list);
+
 
 
 
