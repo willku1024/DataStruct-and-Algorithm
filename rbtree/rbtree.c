@@ -82,6 +82,23 @@ void rbtree_right_rotate(rbtree *T, rbtree_node *y) {
 	y->parent = x;
 }
 
+/*
+检测算法说白了就分为几种情况我给其设定了一个口诀
+
+    结点检测看父色，父为红色才检测。
+
+    父亲若是爷爷左，一共只有三种测。
+
+    叔为红色调颜色，叔为黑色看右左。
+
+    结点位于父的右，左旋右旋顺序做。
+
+    结点位于父的左，一次右旋就哦壳（OK）。
+
+    父亲若是爷爷右，与上相反的操作。
+
+    循环结束别忘记，树根一定要黑色。
+*/
 void rbtree_insert_fixup(rbtree *T, rbtree_node *z) {
 
 	while (z->parent->color == RED) { //z ---> RED
@@ -236,20 +253,24 @@ void rbtree_delete_fixup(rbtree *T, rbtree_node *x) {
 rbtree_node *rbtree_delete(rbtree *T, rbtree_node *z) {
 
 	rbtree_node *y = T->nil;
-	rbtree_node *x = T->nil;
+	rbtree_node *x = T->nil; // x为代替顶替节点的节点，名字代号为x，之后用其调整红黑树
 
+	// 检查要删除节点左右有可能为nil，左为nil时从右子树找代替节点，右为nil时从左子树找代替节点
+	// y用来暂时记录，便于后面x节点的位置
 	if ((z->left == T->nil) || (z->right == T->nil)) {
-		y = z;
+		y = z; // 此种情况，y用来暂时记录当前要删除的单节点
 	} else {
-		y = rbtree_mini(T, z->right);
+		y = rbtree_mini(T, z->right); // 此种情况，y用来暂时记录找到的当前要删除节点的后继
 	}
 
+	// 确定x节点的位置，为了之后做颜色调整
 	if (y->left != T->nil) {
 		x = y->left;
 	} else if (y->right != T->nil) {
 		x = y->right;
 	}
 
+	// x扮演顶替节点（顶替节点为被选中顶替删除节点的节点）的角色
 	x->parent = y->parent;
 	if (y->parent == T->nil) {
 		T->root = x;
@@ -259,11 +280,14 @@ rbtree_node *rbtree_delete(rbtree *T, rbtree_node *z) {
 		y->parent->right = x;
 	}
 
+	// 当y用来暂时记录找到的当前要删除节点的后继的情况，既需要顶替的时候
 	if (y != z) {
 		z->key = y->key;
 		z->value = y->value;
 	}
 
+	// 需要调整红黑树的情况为：
+	// 1、被删除的节点为黑色 2、顶替的节点为黑色
 	if (y->color == BLACK) {
 		rbtree_delete_fixup(T, x);
 	}
