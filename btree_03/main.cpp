@@ -36,25 +36,21 @@ list<BiTNode> preOrder(BiTNode* root)
     list<BiTNode> list;
     stack<BiTNode *> stack;
 
-    if(root == NULL)
-        return list;
-
-    stack.push(root);
-    while (!stack.empty()) {
-        root = stack.top();
-        stack.pop();
-        list.push_back(*root);
-
-        if(root->rchild != NULL)
-            stack.push((root->rchild));
-
-        if(root->lchild != NULL)
-            stack.push((root->lchild));
-
+    BiTNode* cur = root;
+    // 当访问最后一个节点的时候停止，此时rchild为NULL，队列为空
+    while (cur != NULL || false==stack.empty()) {
+        if (cur != NULL) {
+            stack.push(cur);
+            list.push_back(*cur);
+            cur = cur->lchild;
+        } else {
+            cur = stack.top();
+            stack.pop();
+            cur = cur->rchild;
+        }
     }
     return list;
 }
-
 
 // 非递归中序遍历
 list<BiTNode> midOrder(BiTNode* root)
@@ -92,10 +88,14 @@ list<BiTNode> postOrder(BiTNode* root)
     while (!stack.empty()) {
         root = stack.top();
         stack.pop();
+
+        list.push_front(*root);
+
         if(root->lchild != NULL) stack.push((root->lchild));
         if(root->rchild != NULL) stack.push((root->rchild));
-        //list.push_back(*root);
-        list.push_front(*root);
+
+
+
     }
     return list;
 }
